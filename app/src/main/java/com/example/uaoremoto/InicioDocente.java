@@ -22,13 +22,13 @@ public class InicioDocente extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inicio_docente);
 
-       // txtUser =(TextView)findViewById(R.id.textViewNombreD);
-        //String user = getIntent().getStringExtra("names");
-        //txtUser.setText(user);
+        txtUser =(TextView)findViewById(R.id.textViewNombreD);
+        String user = getIntent().getStringExtra("names");
+        txtUser.setText(user);
 
-        //txtCorreo = (TextView) findViewById(R.id.textViewCorreoD);
-        //String email = getIntent().getStringExtra("email");
-        //txtCorreo.setText(email);
+        txtCorreo = (TextView) findViewById(R.id.textViewCorreoD);
+        String email = getIntent().getStringExtra("email");
+        txtCorreo.setText(email);
 
         drawerLayout = findViewById(R.id.drawer_layout);
     }
