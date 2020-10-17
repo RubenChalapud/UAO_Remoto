@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".InicioDocente"></activity>
+        <activity android:name=".AutoevaluacionDocente"></activity>
+        <activity android:name=".InicioDocente" />
         <activity android:name=".LoginEstudiante" />
         <activity android:name=".LoginDocente" />
         <activity android:name=".MainActivity">
