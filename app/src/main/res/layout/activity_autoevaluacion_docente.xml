@@ -72,116 +72,137 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.232" />
 
-    <CheckBox
-        android:id="@+id/cBoxSin1"
-        android:layout_width="333dp"
-        android:layout_height="51dp"
-        android:background="@drawable/checkboxes"
-        android:fontFamily="@font/regular"
-        android:text="Fiebre"
-        android:textColor="@color/blanco"
-        android:textSize="23dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.474"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.355" />
-
-    <CheckBox
-        android:id="@+id/cBoxSin3"
-        android:layout_width="333dp"
-        android:layout_height="51dp"
-        android:background="@drawable/checkboxes"
-        android:fontFamily="@font/regular"
-        android:text="Congestión nasal"
-        android:textColor="@color/blanco"
-        android:textSize="23dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.474"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.541" />
-
-    <CheckBox
-        android:id="@+id/cBoxSin4"
-        android:layout_width="333dp"
-        android:layout_height="51dp"
-        android:background="@drawable/checkboxes"
-        android:fontFamily="@font/regular"
-        android:text="Tos"
-        android:textColor="@color/blanco"
-        android:textSize="23dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.474"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.632" />
-
-    <CheckBox
-        android:id="@+id/cBoxSin5"
-        android:layout_width="333dp"
-        android:layout_height="51dp"
-        android:background="@drawable/checkboxes"
-        android:fontFamily="@font/regular"
-        android:text="Dificultad para respirar"
-        android:textColor="@color/blanco"
-        android:textSize="23dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.474"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.722" />
-
-    <CheckBox
-        android:id="@+id/cBoxNoSintoma"
-        android:layout_width="333dp"
-        android:layout_height="51dp"
-        android:background="@drawable/checkboxes"
-        android:fontFamily="@font/regular"
-        android:text="No presenta sintomas"
-        android:textColor="@color/blanco"
-        android:textSize="23dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.474"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.811" />
-
-    <CheckBox
-        android:id="@+id/cBoxSin2"
-        android:layout_width="333dp"
-        android:layout_height="51dp"
-        android:background="@drawable/checkboxes"
-        android:fontFamily="@font/regular"
-        android:text="Dolor de garganta"
-        android:textColor="@color/blanco"
-        android:textSize="23dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.474"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.448" />
-
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btnValidar"
         android:layout_width="157dp"
         android:layout_height="46dp"
+        android:background="@drawable/btnlogin"
+        android:fontFamily="@font/semibold"
+        android:onClick="onclick"
         android:text="Verificar"
         android:textColor="@color/blanco"
         android:textSize="18dp"
-        android:fontFamily="@font/semibold"
-        android:background="@drawable/btnlogin"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.907" />
+
+    <ScrollView
+        android:layout_width="355dp"
+        android:layout_height="352dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.651">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="10sp">
+
+            <CheckBox
+                android:id="@+id/cBoxSin1"
+                android:layout_width="333dp"
+                android:layout_height="51dp"
+                android:background="@drawable/checkboxes"
+                android:fontFamily="@font/regular"
+                android:text="Fiebre"
+                android:textColor="@color/blanco"
+                android:textSize="23dp" />
+
+            <CheckBox
+                android:id="@+id/cBoxSin2"
+                android:layout_width="333dp"
+                android:layout_height="51dp"
+                android:layout_marginTop="5sp"
+                android:background="@drawable/checkboxes"
+                android:fontFamily="@font/regular"
+                android:text="Dolor de garganta"
+                android:textColor="@color/blanco"
+                android:textSize="23dp" />
+
+            <CheckBox
+                android:id="@+id/cBoxSin3"
+                android:layout_width="333dp"
+                android:layout_height="51dp"
+                android:layout_marginTop="5sp"
+                android:background="@drawable/checkboxes"
+                android:fontFamily="@font/regular"
+                android:text="Congestión nasal"
+                android:textColor="@color/blanco"
+                android:textSize="23dp" />
+
+            <CheckBox
+                android:id="@+id/cBoxSin4"
+                android:layout_width="333dp"
+                android:layout_height="51dp"
+                android:layout_marginTop="5sp"
+                android:background="@drawable/checkboxes"
+                android:fontFamily="@font/regular"
+                android:text="Tos"
+                android:textColor="@color/blanco"
+                android:textSize="23dp" />
+
+            <CheckBox
+                android:id="@+id/cBoxSin5"
+                android:layout_width="333dp"
+                android:layout_height="51dp"
+                android:layout_marginTop="5sp"
+                android:background="@drawable/checkboxes"
+                android:fontFamily="@font/regular"
+                android:text="Dificultad para respirar"
+                android:textColor="@color/blanco"
+                android:textSize="23dp" />
+
+            <CheckBox
+                android:id="@+id/cBoxSin6"
+                android:layout_width="333dp"
+                android:layout_height="51dp"
+                android:layout_marginTop="5sp"
+                android:background="@drawable/checkboxes"
+                android:fontFamily="@font/regular"
+                android:text="Fatiga"
+                android:textColor="@color/blanco"
+                android:textSize="23dp" />
+
+            <CheckBox
+                android:id="@+id/cBoxSin7"
+                android:layout_width="333dp"
+                android:layout_height="51dp"
+                android:layout_marginTop="5sp"
+                android:background="@drawable/checkboxes"
+                android:fontFamily="@font/regular"
+                android:text="Escalofrío"
+                android:textColor="@color/blanco"
+                android:textSize="23dp" />
+
+            <CheckBox
+                android:id="@+id/cBoxSin8"
+                android:layout_width="333dp"
+                android:layout_height="51dp"
+                android:layout_marginTop="5sp"
+                android:background="@drawable/checkboxes"
+                android:fontFamily="@font/regular"
+                android:text="Dolor de músculos"
+                android:textColor="@color/blanco"
+                android:textSize="23dp" />
+
+            <CheckBox
+                android:id="@+id/cBoxNoSintoma"
+                android:layout_width="333dp"
+                android:layout_height="51dp"
+                android:layout_marginTop="5sp"
+                android:background="@drawable/checkboxes"
+                android:fontFamily="@font/regular"
+                android:text="No presenta sintomas"
+                android:textColor="@color/blanco"
+                android:textSize="23dp" />
+        </LinearLayout>
+
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
