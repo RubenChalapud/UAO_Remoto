@@ -1,9 +1,11 @@
 package com.example.uaoremoto;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -61,6 +63,10 @@ public class InicioDocente extends AppCompatActivity {
     }
 
     public void ClickInicio(View view){
+        closeDrawer(drawerLayout);
+    }
+
+    private static void closeDrawer(DrawerLayout drawerLayout) {
         if(drawerLayout.isDrawerOpen(GravityCompat.START)){
             drawerLayout.closeDrawer(GravityCompat.START);
         }
@@ -76,6 +82,28 @@ public class InicioDocente extends AppCompatActivity {
     }
 
     public void ClickSalir(View view){
+        AlertDialog.Builder builder = new AlertDialog.Builder(InicioDocente.this);
+        builder.setTitle("Salir");
+        builder.setMessage("¿Deseas salir de UAO Remoto?");
+        builder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                InicioDocente.this.finishAffinity();
+                System.exit(0);
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        builder.show();
+    }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        closeDrawer(drawerLayout);
     }
 }
