@@ -59,4 +59,23 @@ public class InicioDocente extends AppCompatActivity {
     private static void openDrawer(DrawerLayout drawerLayout){
         drawerLayout.openDrawer(GravityCompat.START);
     }
+
+    public void ClickInicio(View view){
+        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }
+    }
+
+    public void ClickAutoMenu(View view){
+        Intent i = new Intent(InicioDocente.this, AutoevaluacionDocente.class);
+        startActivity(i);
+    }
+
+    public void ClickCursosMenu(View view){
+
+    }
+
+    public void ClickSalir(View view){
+
+    }
 }

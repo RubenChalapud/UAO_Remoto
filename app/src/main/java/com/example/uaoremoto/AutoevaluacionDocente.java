@@ -86,7 +86,6 @@ public class AutoevaluacionDocente extends AppCompatActivity {
                 cns.setChecked(false);
             }
         });
-
     }
 
     private void comprobar() {
