@@ -8,50 +8,22 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 
-public class InicioDocente extends AppCompatActivity {
-    public static final String user="names";
-    public static final String email="email";
-    TextView txtUser;
-    TextView txtCorreo;
-
-    Button btnRealizarAutoE;
-
+public class MisCursosDocente extends AppCompatActivity {
     //Inicializar menu
     DrawerLayout drawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_inicio_docente);
-
-        //Boton para evaluar covid
-        btnRealizarAutoE = (Button) findViewById(R.id.btnRealizarEvaluacion);
-
-        txtUser =(TextView)findViewById(R.id.textViewNombreD);
-        String user = getIntent().getStringExtra("names");
-        txtUser.setText(user);
-
-        txtCorreo = (TextView) findViewById(R.id.textViewCorreoD);
-        String email = getIntent().getStringExtra("email");
-        txtCorreo.setText(email);
+        setContentView(R.layout.activity_mis_cursos_docente);
 
         //Menu
         drawerLayout = findViewById(R.id.drawer_layout);
-
-        //Ir a evaluar covid
-        btnRealizarAutoE.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(InicioDocente.this, AutoevaluacionDocente.class);
-                startActivity(i);
-            }
-        });
     }
+
+
 
     //Metodos para Menu
     public void ClickMenu(View view){
@@ -63,7 +35,8 @@ public class InicioDocente extends AppCompatActivity {
     }
 
     public void ClickInicio(View view){
-        closeDrawer(drawerLayout);
+        Intent i = new Intent(MisCursosDocente.this, InicioDocente.class);
+        startActivity(i);
     }
 
     private static void closeDrawer(DrawerLayout drawerLayout) {
@@ -73,23 +46,22 @@ public class InicioDocente extends AppCompatActivity {
     }
 
     public void ClickAutoMenu(View view){
-        Intent i = new Intent(InicioDocente.this, AutoevaluacionDocente.class);
+        Intent i = new Intent(MisCursosDocente.this, AutoevaluacionDocente.class);
         startActivity(i);
     }
 
     public void ClickCursosMenu(View view){
-        Intent i = new Intent(InicioDocente.this, MisCursosDocente.class);
-        startActivity(i);
+        closeDrawer(drawerLayout);
     }
 
     public void ClickSalir(View view){
-        AlertDialog.Builder builder = new AlertDialog.Builder(InicioDocente.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(MisCursosDocente.this);
         builder.setTitle("Salir");
         builder.setMessage("¿Deseas salir de UAO Remoto?");
         builder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                InicioDocente.this.finishAffinity();
+                MisCursosDocente.this.finishAffinity();
                 System.exit(0);
             }
         });
