@@ -1,5 +1,6 @@
 package com.example.uaoremoto;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
@@ -10,24 +11,44 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.Toast;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
 
 import java.util.ArrayList;
+import java.util.List;
+
 
 public class MisCursosDocente extends AppCompatActivity {
     //Inicializar menu
     DrawerLayout drawerLayout;
 
-    //Cursos del Docente (Realizar la busuqeda en la base de datos para determinar el numero de cursos)
-    static int numCursos = 4;
     //LinearLayout que contiene los botones
     LinearLayout botonesCursos;
+
+    //Prueba
+    ListView listViewUsers;
+
+    //lista que almacena todos los usuarios de la base de datos de Firebase
+    List<Curso> Cursos;
+    //lista que almacena todos los usuarios de la base de datos de Firebase
+    List<Profesor> Profesores;
+
+    DatabaseReference databaseReference;
+    DatabaseReference dbCursos;
+    DatabaseReference dbProfesores;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,45 +61,141 @@ public class MisCursosDocente extends AppCompatActivity {
         //Llamar a LinearLayout que contiene botones
         botonesCursos = (LinearLayout) findViewById(R.id.CursosDBotones);
 
-        //Arraylist para la creacion de los botones de cursos
-        ArrayList<boton> cursos = new ArrayList<boton>();
-        cursos.add(new boton(1, "Calculo"));
-        cursos.add(new boton(2, "Fisica"));
-        cursos.add(new boton(3, "Algebra"));
-        cursos.add(new boton(4, "Ecuaciones"));
-        cursos.add(new boton(5, "Calculo 2"));
+        //prueba
+        //  referenciamos datos de firebase
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+        dbCursos = FirebaseDatabase.getInstance().getReference("Cursos");
+        dbProfesores = FirebaseDatabase.getInstance().getReference("Profesores");
 
-        //recorremos Arraylist para asignar los botones a cada curso
-        for (boton c:cursos){
-            final String ncurso = c.nombreCurso;
-            Button btn = new Button(getApplicationContext());
-            btn.setText(c.nombreCurso);
-            btn.setId(c.cod);
-            btn.setTextColor(Color.BLACK);
-            botonesCursos.addView(btn);
-            btn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Toast.makeText(getApplicationContext(), "Curso:" + ncurso, Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
-
-
-
+        econtrarIdProfesor(email);
 
         //Menu
         drawerLayout = findViewById(R.id.drawer_layout);
     }
 
+    private void econtrarIdProfesor(String email) {
+        // listado de objetos almacenados (usuarios creados)
+        Profesores = new ArrayList<>();
+        final String ema = email;
+
+        databaseReference.child("Profesores").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                // Borramos la lista previa
+                Profesores.clear();
+
+                if(dataSnapshot.exists()){
+                    for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                        //Log.e("Profesores: ", ""+ snapshot.getValue());
+                        //obtenemos los usuarios de la consola de Firebase
+                        Profesor Profesor = snapshot.getValue(Profesor.class);
+                        // agregamos usuarios a la lista
+                        Profesores.add(Profesor);
+                    }
+                    for (int i = 0; i < Profesores.size(); i++) {
+                        Profesor Profesor = Profesores.get(i);
+                        if(Profesor.getCorreoprofesor().equals(ema)){
+                            System.out.println(Profesor.getIdprofesor());
+                            String idpro = Profesor.getIdprofesor();
+                            encontrarCursosconId(idpro);
+                        }
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+    }
+
+    private void encontrarCursosconId(String idpro) {
+        // listado de objetos almacenados (usuarios creados)
+        Cursos = new ArrayList<>();
+        final String idp = idpro;
+        //Arraylist para la creacion de los botones de cursos
+        final ArrayList<boton> cursos = new ArrayList<boton>();
+
+        databaseReference.child("Cursos").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                // Borramos la lista previa de Cursos
+                Cursos.clear();
+                cursos.clear();
+                if(dataSnapshot.exists()){
+                    for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                        //Log.e("Profesores: ", ""+ snapshot.getValue());
+                        //obtenemos los usuarios de la consola de Firebase
+                        Curso Curso = snapshot.getValue(Curso.class);
+                        // agregamos usuarios a la lista
+                        Cursos.add(Curso);
+                    }
+
+                    for (int i = 0; i < Cursos.size(); i++) {
+                        Curso Curso = Cursos.get(i);
+                        if(Curso.getIdprofesor().equals(idp)){
+                            cursos.add(new boton(Curso.getIdcurso(), Curso.getNombrecurso(), Curso.getNumestudiantes(), Curso.getHorariocurso(), Curso.getIdprofesor(), Curso.getIdaula()));
+                        }else{
+                            Toast.makeText(getApplicationContext(), "El profesor no tiene cursos asociados", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    //recorremos Arraylist para asignar los botones a cada curso
+                    for (boton c:cursos){
+                        final String ncurso = c.nombreCurso;
+                        final String idcur = c.cod;
+                        final String numest = c.numestudiantes;
+                        final String horario = c.horariocurso;
+                        final String idpro = c.idprofesor;
+                        final String idaul = c.idaula;
+                        Button btn = new Button(getApplicationContext());
+                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(1000, 150);
+                        params.setMargins(0, 30, 0, 0);//left, top, right, bottom
+                        btn.setLayoutParams(params);
+                        btn.setText(c.nombreCurso);
+                        btn.setTextColor(Color.WHITE);
+                        btn.setBackgroundColor(Color.rgb(96,108,129));
+                        botonesCursos.addView(btn);
+                        btn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Toast.makeText(getApplicationContext(), "Curso: " + ncurso, Toast.LENGTH_SHORT).show();
+                                Intent i = new Intent(MisCursosDocente.this, VistaCurso.class);
+                                i.putExtra("idcurso", idcur);
+                                i.putExtra("nombrecurso", ncurso);
+                                i.putExtra("numeroestudiantes", numest);
+                                i.putExtra("horariocurso", horario);
+                                i.putExtra("idprofesorc", idpro);
+                                i.putExtra("idaulac", idaul);
+                                startActivity(i);
+                            }
+                        });
+                    }
+
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+
+    }
+
     //Botones para el array list
     class boton{
-        public int cod;
+        public String cod;
         public String nombreCurso;
+        public String numestudiantes;
+        public String horariocurso;
+        public String idprofesor;
+        public String idaula;
 
-        public boton(int cod, String nombreCurso){
+        public boton(String cod, String nombreCurso, String numestudiantes, String horariocurso, String idprofesor, String idaula){
             this.cod = cod;
             this.nombreCurso = nombreCurso;
+            this.numestudiantes = numestudiantes;
+            this.horariocurso = horariocurso;
+            this.idprofesor = idprofesor;
+            this.idaula = idaula;
         }
     }
 
