@@ -92,6 +92,7 @@ public class MisCursosDocente extends AppCompatActivity {
                         // agregamos usuarios a la lista
                         Profesores.add(Profesor);
                     }
+                    //comprobamos el correo y asociamos a un id
                     for (int i = 0; i < Profesores.size(); i++) {
                         Profesor Profesor = Profesores.get(i);
                         if(Profesor.getCorreoprofesor().equals(ema)){
