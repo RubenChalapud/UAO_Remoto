@@ -19,11 +19,13 @@ public class ValidacionNegativaD extends AppCompatActivity {
         btnIrInicio = (Button) findViewById(R.id.btnIrInicioND);
         btnNotifEst = (Button) findViewById(R.id.btnNotiEst);
         btnNotifFac = (Button) findViewById(R.id.btnNotiFac);
+        final String email = getIntent().getStringExtra("email");
 
         btnIrInicio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent( ValidacionNegativaD.this, InicioDocente.class);
+                i.putExtra("email", email);
                 startActivity(i);
             }
         });

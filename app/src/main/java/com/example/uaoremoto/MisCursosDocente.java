@@ -56,7 +56,7 @@ public class MisCursosDocente extends AppCompatActivity {
         setContentView(R.layout.activity_mis_cursos_docente);
 
         //Obtener el correo del Docente
-        String email = getIntent().getStringExtra("correo");
+        String email = getIntent().getStringExtra("email");
 
         //Llamar a LinearLayout que contiene botones
         botonesCursos = (LinearLayout) findViewById(R.id.CursosDBotones);
@@ -211,7 +211,9 @@ public class MisCursosDocente extends AppCompatActivity {
     }
 
     public void ClickInicio(View view){
+        String email = getIntent().getStringExtra("email");
         Intent i = new Intent(MisCursosDocente.this, InicioDocente.class);
+        i.putExtra("email", email);
         startActivity(i);
     }
 
@@ -222,7 +224,9 @@ public class MisCursosDocente extends AppCompatActivity {
     }
 
     public void ClickAutoMenu(View view){
+        String email = getIntent().getStringExtra("email");
         Intent i = new Intent(MisCursosDocente.this, AutoevaluacionDocente.class);
+        i.putExtra("email", email);
         startActivity(i);
     }
 

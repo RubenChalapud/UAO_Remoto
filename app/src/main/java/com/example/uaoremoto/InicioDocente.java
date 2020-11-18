@@ -37,7 +37,7 @@ public class InicioDocente extends AppCompatActivity {
         txtUser.setText(user);
 
         txtCorreo = (TextView) findViewById(R.id.textViewCorreoD);
-        String email = getIntent().getStringExtra("email");
+        final String email = getIntent().getStringExtra("email");
         txtCorreo.setText(email);
 
         //Menu
@@ -48,6 +48,7 @@ public class InicioDocente extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(InicioDocente.this, AutoevaluacionDocente.class);
+                i.putExtra("email", email);
                 startActivity(i);
             }
         });
@@ -73,14 +74,16 @@ public class InicioDocente extends AppCompatActivity {
     }
 
     public void ClickAutoMenu(View view){
+        String email = getIntent().getStringExtra("email");
         Intent i = new Intent(InicioDocente.this, AutoevaluacionDocente.class);
+        i.putExtra("email", email);
         startActivity(i);
     }
 
     public void ClickCursosMenu(View view){
         String email = getIntent().getStringExtra("email");
         Intent i = new Intent(InicioDocente.this, MisCursosDocente.class);
-        i.putExtra("correo", email);
+        i.putExtra("email", email);
         startActivity(i);
     }
 

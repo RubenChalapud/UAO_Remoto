@@ -22,11 +22,13 @@ public class ValidacionPositivaD extends AppCompatActivity {
         msj.setText(mesj);
 
         btnIrInicioD = (Button) findViewById(R.id.btnIrInicioD);
+        final String email = getIntent().getStringExtra("email");
 
         btnIrInicioD.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent( ValidacionPositivaD.this, InicioDocente.class);
+                i.putExtra("email", email);
                 startActivity(i);
             }
         });

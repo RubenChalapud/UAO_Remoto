@@ -115,6 +115,7 @@ public class LoginDocente extends AppCompatActivity implements View.OnClickListe
                                 }
                                 @Override
                                 public void onCancelled(@NonNull DatabaseError databaseError) {
+
                                 }
                             });
                         } else {
