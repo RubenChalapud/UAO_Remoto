@@ -11,7 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ActivityListaEstudiantes"></activity>
+        <activity android:name=".AutoevaluacionEstudiantes"></activity>
+        <activity android:name=".InicioEstudiante" />
+        <activity android:name=".ActivityListaEstudiantes" />
         <activity android:name=".VistaCurso" />
         <activity android:name=".MisCursosDocente" />
         <activity android:name=".ValidacionNegativaD" />

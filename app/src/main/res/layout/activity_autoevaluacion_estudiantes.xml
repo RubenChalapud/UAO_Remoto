@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AutoevaluacionEstudiantes"
+    android:background="@drawable/backevaluacion">
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="32dp"
+        android:fontFamily="@font/light"
+        android:text="¡PROTEJÁMONOS!"
+        android:textColor="@color/blanco"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.126"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.09" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="32dp"
+        android:fontFamily="@font/semibold"
+        android:text="autoevaluación covid-19"
+        android:textAllCaps="true"
+        android:textColor="@color/blanco"
+        android:textSize="22dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.352"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.127" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="325dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:fontFamily="@font/light"
+        android:text="Selecciona los síntomas que presentas:"
+        android:textColor="@color/negro"
+        android:textSize="22dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.414"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.232" />
+
+    <Button
+        android:id="@+id/btnValidar"
+        android:layout_width="157dp"
+        android:layout_height="46dp"
+        android:background="@drawable/btnlogin"
+        android:fontFamily="@font/semibold"
+        android:onClick="onclick"
+        android:text="Verificar"
+        android:textColor="@color/blanco"
+        android:textSize="18dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.907" />
+
+    <ScrollView
+        android:layout_width="355dp"
+        android:layout_height="352dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.651">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="10sp">
+
+            <CheckBox
+                android:id="@+id/cBoxSin1"
+                android:layout_width="333dp"
+                android:layout_height="51dp"
+                android:background="@drawable/checkboxes"
+                android:fontFamily="@font/regular"
+                android:text="Fiebre"
+                android:textColor="@color/blanco"
+                android:textSize="23dp" />
+
+            <CheckBox
+                android:id="@+id/cBoxSin2"
+                android:layout_width="333dp"
+                android:layout_height="51dp"
+                android:layout_marginTop="5sp"
+                android:background="@drawable/checkboxes"
+                android:fontFamily="@font/regular"
+                android:text="Dolor de garganta"
+                android:textColor="@color/blanco"
+                android:textSize="23dp" />
+
+            <CheckBox
+                android:id="@+id/cBoxSin3"
+                android:layout_width="333dp"
+                android:layout_height="51dp"
+                android:layout_marginTop="5sp"
+                android:background="@drawable/checkboxes"
+                android:fontFamily="@font/regular"
+                android:text="Congestión nasal"
+                android:textColor="@color/blanco"
+                android:textSize="23dp" />
+
+            <CheckBox
+                android:id="@+id/cBoxSin4"
+                android:layout_width="333dp"
+                android:layout_height="51dp"
+                android:layout_marginTop="5sp"
+                android:background="@drawable/checkboxes"
+                android:fontFamily="@font/regular"
+                android:text="Tos"
+                android:textColor="@color/blanco"
+                android:textSize="23dp" />
+
+            <CheckBox
+                android:id="@+id/cBoxSin5"
+                android:layout_width="333dp"
+                android:layout_height="51dp"
+                android:layout_marginTop="5sp"
+                android:background="@drawable/checkboxes"
+                android:fontFamily="@font/regular"
+                android:text="Dificultad para respirar"
+                android:textColor="@color/blanco"
+                android:textSize="23dp" />
+
+            <CheckBox
+                android:id="@+id/cBoxSin6"
+                android:layout_width="333dp"
+                android:layout_height="51dp"
+                android:layout_marginTop="5sp"
+                android:background="@drawable/checkboxes"
+                android:fontFamily="@font/regular"
+                android:text="Fatiga"
+                android:textColor="@color/blanco"
+                android:textSize="23dp" />
+
+            <CheckBox
+                android:id="@+id/cBoxSin7"
+                android:layout_width="333dp"
+                android:layout_height="51dp"
+                android:layout_marginTop="5sp"
+                android:background="@drawable/checkboxes"
+                android:fontFamily="@font/regular"
+                android:text="Escalofrío"
+                android:textColor="@color/blanco"
+                android:textSize="23dp" />
+
+            <CheckBox
+                android:id="@+id/cBoxSin8"
+                android:layout_width="333dp"
+                android:layout_height="51dp"
+                android:layout_marginTop="5sp"
+                android:background="@drawable/checkboxes"
+                android:fontFamily="@font/regular"
+                android:text="Dolor de músculos"
+                android:textColor="@color/blanco"
+                android:textSize="23dp" />
+
+            <CheckBox
+                android:id="@+id/cBoxNoSintoma"
+                android:layout_width="333dp"
+                android:layout_height="51dp"
+                android:layout_marginTop="5sp"
+                android:background="@drawable/checkboxes"
+                android:fontFamily="@font/regular"
+                android:text="No presenta sintomas"
+                android:textColor="@color/blanco"
+                android:textSize="23dp" />
+        </LinearLayout>
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
