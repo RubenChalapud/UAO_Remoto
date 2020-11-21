@@ -122,7 +122,7 @@ public class MisCursosEstudiante extends AppCompatActivity {
                         Clase Clase = Clases.get(i);
                         if(Clase.getIdestudiante().equals(ide)){
                             String idcurso = Clase.getIdcurso();
-                            encontrarCursoconId(idcurso, ide);
+                            encontrarCursoconId(idcurso, ide, Clase.getIdclase());
                         }
                     }
 
@@ -134,10 +134,11 @@ public class MisCursosEstudiante extends AppCompatActivity {
         });
     }
 
-    private void encontrarCursoconId(String idcurso, final String idest) {
+    private void encontrarCursoconId(String idcurso, final String idest, final String idclase) {
         // listado de objetos almacenados (usuarios creados)
         Cursos = new ArrayList<>();
         final String idc = idcurso;
+
         //Arraylist para la creacion de los botones de cursos
         final ArrayList<MisCursosEstudiante.boton> cursos = new ArrayList<MisCursosEstudiante.boton>();
 
@@ -193,6 +194,7 @@ public class MisCursosEstudiante extends AppCompatActivity {
                                 i.putExtra("idprofesorc", idpro);
                                 i.putExtra("idaulac", idaul);
                                 i.putExtra("idestudiante", idest);
+                                i.putExtra("idclase", idclase);
                                 startActivity(i);
                             }
                         });

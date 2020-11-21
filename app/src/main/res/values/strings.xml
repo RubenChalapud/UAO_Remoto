@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">UAO Remoto</string>
+    <string name="title_activity_ubicacion_aula">Map</string>
 </resources>
