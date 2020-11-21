@@ -134,7 +134,6 @@ public class AutoevaluacionDocente extends AppCompatActivity {
         if(cns.isChecked()==true){
             mensaje = "No presentas síntomas relacionados a COVID-19. Recuerda:";
             sintomasprofesor = "No";
-            SintomasProfesor(sintomasprofesor);
             Intent i = new Intent(AutoevaluacionDocente.this, ValidacionPositivaD.class);
             i.putExtra("email", email);
             i.putExtra("mensaje", mensaje);
@@ -143,7 +142,6 @@ public class AutoevaluacionDocente extends AppCompatActivity {
         else if(c3.isChecked()==true && c1.isChecked()==false && c2.isChecked()==false && c4.isChecked()==false && c5.isChecked()==false && c6.isChecked()==false && c7.isChecked()==false){
             mensaje = "Presentas síntomas leves relacionados a COVID-19, como congestión nasal o dolor muscular. Tienes permitido ir al Campus UAO, si los sintomas empeoran, debes notificar y no asistir. Recuerda:";
             sintomasprofesor = "No";
-            SintomasProfesor(sintomasprofesor);
             Intent i = new Intent(AutoevaluacionDocente.this, ValidacionPositivaD.class);
             i.putExtra("email", email);
             i.putExtra("mensaje", mensaje);
@@ -152,7 +150,6 @@ public class AutoevaluacionDocente extends AppCompatActivity {
         else if(c8.isChecked()==true && c1.isChecked()==false && c2.isChecked()==false && c4.isChecked()==false && c5.isChecked()==false && c6.isChecked()==false && c7.isChecked()==false){
             mensaje = "Presentas síntomas leves relacionados a COVID-19, como congestión nasal o dolor muscular. Tienes permitido ir al Campus UAO, si los sintomas empeoran, debes notificar y no asistir. Recuerda:";
             sintomasprofesor = "No";
-            SintomasProfesor(sintomasprofesor);
             Intent i = new Intent(AutoevaluacionDocente.this, ValidacionPositivaD.class);
             i.putExtra("email", email);
             i.putExtra("mensaje", mensaje);
@@ -162,20 +159,21 @@ public class AutoevaluacionDocente extends AppCompatActivity {
             Toast.makeText(AutoevaluacionDocente.this, "Seleccione los síntomas que presenta para continuar.", Toast.LENGTH_LONG).show();
         }else{
             sintomasprofesor = "Si";
-            SintomasProfesor(sintomasprofesor);
             Intent i = new Intent(AutoevaluacionDocente.this, ValidacionNegativaD.class);
             i.putExtra("email", email);
             startActivity(i);
         }
+
+        SintomasProfesor(sintomasprofesor);
     }
 
     private void SintomasProfesor(final String sintomasprofesor) {
-
         databaseReference.child("Profesores").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 // Borramos la lista previa
                 Profesores.clear();
+                String idp = null;
                 if(dataSnapshot.exists()){
                     for(DataSnapshot snapshot : dataSnapshot.getChildren()){
                         //obtenemos los usuarios de la consola de Firebase
@@ -187,9 +185,10 @@ public class AutoevaluacionDocente extends AppCompatActivity {
                     for (int i = 0; i < Profesores.size(); i++) {
                         Profesor Profesor = Profesores.get(i);
                         if(Profesor.getCorreoprofesor().equals(email)){
-                            ActualizarProfesor(Profesor.getIdprofesor(), Profesor.getNombreprofesor(), Profesor.getApellidoprofesor(), Profesor.getCorreoprofesor(), Profesor.getContraseñaprofesor(), sintomasprofesor);
+                            idp = Profesor.getIdprofesor();
                         }
                     }
+                    databaseReference.child("Profesores").child(idp).child("sintomasprofesor").setValue(sintomasprofesor);
                 }
             }
             @Override
@@ -197,12 +196,5 @@ public class AutoevaluacionDocente extends AppCompatActivity {
             }
         });
 
-    }
-
-    private void ActualizarProfesor(String idprofesor, String nombreprofesor, String apellidoprofesor, String correoprofesor, String contraseñaprofesor, String sintomasprofesor) {
-        DatabaseReference UpdateReference = FirebaseDatabase.getInstance().getReference("Profesores").child(idprofesor);
-        Profesor Profesor = new Profesor(idprofesor, nombreprofesor, apellidoprofesor, correoprofesor, contraseñaprofesor, sintomasprofesor);
-        //Actualizo usuarios en la colección de firebase
-        UpdateReference.setValue(Profesor);
     }
 }

@@ -11,7 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ValidacionPositivaE"></activity>
+        <activity android:name=".VistaCursoE"></activity>
+        <activity android:name=".MisCursosEstudiante" />
+        <activity android:name=".ValidacionPositivaE" />
         <activity android:name=".ValidacionNegativaE" />
         <activity android:name=".AutoevaluacionEstudiantes" />
         <activity android:name=".InicioEstudiante" />

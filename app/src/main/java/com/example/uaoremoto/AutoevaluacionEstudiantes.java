@@ -134,8 +134,7 @@ public class AutoevaluacionEstudiantes extends AppCompatActivity {
         if(cns.isChecked()==true){
             mensaje = "No presentas síntomas relacionados a COVID-19. Recuerda:";
             sintomasestudiante = "No";
-            SintomasEstudiante(sintomasestudiante);
-            Intent i = new Intent(AutoevaluacionEstudiantes.this, ValidacionPositivaD.class);
+            Intent i = new Intent(AutoevaluacionEstudiantes.this, ValidacionPositivaE.class);
             i.putExtra("email", email);
             i.putExtra("mensaje", mensaje);
             startActivity(i);
@@ -143,8 +142,7 @@ public class AutoevaluacionEstudiantes extends AppCompatActivity {
         else if(c3.isChecked()==true && c1.isChecked()==false && c2.isChecked()==false && c4.isChecked()==false && c5.isChecked()==false && c6.isChecked()==false && c7.isChecked()==false){
             mensaje = "Presentas síntomas leves relacionados a COVID-19, como congestión nasal o dolor muscular. Tienes permitido ir al Campus UAO, si los sintomas empeoran, debes notificar y no asistir. Recuerda:";
             sintomasestudiante = "No";
-            SintomasEstudiante(sintomasestudiante);
-            Intent i = new Intent(AutoevaluacionEstudiantes.this, ValidacionPositivaD.class);
+            Intent i = new Intent(AutoevaluacionEstudiantes.this, ValidacionPositivaE.class);
             i.putExtra("email", email);
             i.putExtra("mensaje", mensaje);
             startActivity(i);
@@ -152,8 +150,7 @@ public class AutoevaluacionEstudiantes extends AppCompatActivity {
         else if(c8.isChecked()==true && c1.isChecked()==false && c2.isChecked()==false && c4.isChecked()==false && c5.isChecked()==false && c6.isChecked()==false && c7.isChecked()==false){
             mensaje = "Presentas síntomas leves relacionados a COVID-19, como congestión nasal o dolor muscular. Tienes permitido ir al Campus UAO, si los sintomas empeoran, debes notificar y no asistir. Recuerda:";
             sintomasestudiante = "No";
-            SintomasEstudiante(sintomasestudiante);
-            Intent i = new Intent(AutoevaluacionEstudiantes.this, ValidacionPositivaD.class);
+            Intent i = new Intent(AutoevaluacionEstudiantes.this, ValidacionPositivaE.class);
             i.putExtra("email", email);
             i.putExtra("mensaje", mensaje);
             startActivity(i);
@@ -162,11 +159,18 @@ public class AutoevaluacionEstudiantes extends AppCompatActivity {
             Toast.makeText(AutoevaluacionEstudiantes.this, "Seleccione los síntomas que presenta para continuar.", Toast.LENGTH_LONG).show();
         }else{
             sintomasestudiante = "Si";
-            SintomasEstudiante(sintomasestudiante);
-            Intent i = new Intent(AutoevaluacionEstudiantes.this, ValidacionNegativaD.class);
+            Intent i = new Intent(AutoevaluacionEstudiantes.this, ValidacionNegativaE.class);
             i.putExtra("email", email);
             startActivity(i);
         }
+        SintomasEstudiante(sintomasestudiante);
+        //SsintomasEstudiante(sintomasestudiante);
+    }
+
+    private void SsintomasEstudiante(String sintomasestudiante) {
+        databaseReference.child("Estudiantes").orderByChild("correoestudiante");
+        String key = databaseReference.child("Estudiantes").child("correoestudiante").child(email).push().getKey();
+        databaseReference.child("Estudiantes").child(key).child("sintomasestudiante").setValue(sintomasestudiante);
     }
 
     private void SintomasEstudiante(final String sintomasestudiante) {
@@ -176,6 +180,7 @@ public class AutoevaluacionEstudiantes extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 // Borramos la lista previa
                 Estudiantes.clear();
+                String ide = null;
                 if(dataSnapshot.exists()){
                     for(DataSnapshot snapshot : dataSnapshot.getChildren()){
                         //obtenemos los usuarios de la consola de Firebase
@@ -187,9 +192,11 @@ public class AutoevaluacionEstudiantes extends AppCompatActivity {
                     for (int i = 0; i < Estudiantes.size(); i++) {
                         Estudiante Estudiante = Estudiantes.get(i);
                         if(Estudiante.getCorreoestudiante().equals(email)){
-                            ActualizarEstudiante(Estudiante.getIdestudiante(), Estudiante.getNombreestudiante(), Estudiante.getApellidoestudiante(), Estudiante.getCorreoestudiante(), Estudiante.getContraseñaestudiante(), Estudiante.getProgramaestudiante(), sintomasestudiante);
+                            ide = Estudiante.getIdestudiante();
                         }
                     }
+                    //databaseReference.child("Estudiantes").child("correoestudiante").child(email).getKey();
+                    databaseReference.child("Estudiantes").child(ide).child("sintomasestudiante").setValue(sintomasestudiante);
                 }
             }
             @Override
@@ -197,13 +204,6 @@ public class AutoevaluacionEstudiantes extends AppCompatActivity {
             }
         });
 
-    }
-
-    private void ActualizarEstudiante(String idestudiante, String nombreestudiante, String apellidoestudiante, String correoestudiante, String contraseñaestudiante, String programaestudiante, String sintomasestudiante) {
-        DatabaseReference UpdateReference = FirebaseDatabase.getInstance().getReference("Estudiantes").child(idestudiante);
-        Estudiante Estudiante = new Estudiante(idestudiante, nombreestudiante, apellidoestudiante, correoestudiante, contraseñaestudiante, programaestudiante, sintomasestudiante);
-        //Actualizo usuarios en la colección de firebase
-        UpdateReference.setValue(Estudiante);
     }
 
 }

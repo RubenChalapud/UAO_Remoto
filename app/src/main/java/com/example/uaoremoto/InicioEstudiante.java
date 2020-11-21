@@ -79,7 +79,7 @@ public class InicioEstudiante extends AppCompatActivity {
 
     public void ClickCursosMenu(View view){
         String email = getIntent().getStringExtra("email");
-        Intent i = new Intent(InicioEstudiante.this, MisCursosDocente.class);
+        Intent i = new Intent(InicioEstudiante.this, MisCursosEstudiante.class);
         i.putExtra("email", email);
         startActivity(i);
     }

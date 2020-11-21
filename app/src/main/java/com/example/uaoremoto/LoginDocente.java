@@ -96,21 +96,15 @@ public class LoginDocente extends AppCompatActivity implements View.OnClickListe
                                             // agregamos usuarios a la lista
                                             Profesores.add(Profesor);
                                         }
+                                        int pos = email.indexOf("@");
+                                        String user = email.substring(0, pos);
+                                        Toast.makeText(LoginDocente.this, "Bienvenido: " + textCorreo.getText(), Toast.LENGTH_LONG).show();
+                                        Intent intencion = new Intent(getApplication(), InicioDocente.class);
+                                        intencion.putExtra(InicioDocente.user, user);
+                                        intencion.putExtra(InicioDocente.email, email);
+                                        startActivity(intencion);
                                         //comprobamos el correo de docente asociado para comprobar
-                                        for (int i = 0; i < Profesores.size(); i++) {
-                                            Profesor Profesor = Profesores.get(i);
-                                            if(Profesor.getCorreoprofesor().equals(email)){
-                                                int pos = email.indexOf("@");
-                                                String user = email.substring(0, pos);
-                                                Toast.makeText(LoginDocente.this, "Bienvenido: " + textCorreo.getText(), Toast.LENGTH_LONG).show();
-                                                Intent intencion = new Intent(getApplication(), InicioDocente.class);
-                                                intencion.putExtra(InicioDocente.user, user);
-                                                intencion.putExtra(InicioDocente.email, email);
-                                                startActivity(intencion);
-                                            }else{
-                                                Toast.makeText(LoginDocente.this, "El usuario no es permitido", Toast.LENGTH_SHORT).show();
-                                            }
-                                        }
+
                                     }
                                 }
                                 @Override
