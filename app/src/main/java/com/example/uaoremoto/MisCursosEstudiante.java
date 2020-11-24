@@ -29,6 +29,8 @@ public class MisCursosEstudiante extends AppCompatActivity {
     //Inicializar menu
     DrawerLayout drawerLayout;
 
+    String email, user, idestudiante;
+
     //LinearLayout que contiene los botones
     LinearLayout botonesCursos;
 
@@ -50,7 +52,9 @@ public class MisCursosEstudiante extends AppCompatActivity {
         setContentView(R.layout.activity_mis_cursos_estudiante);
 
         //Obtener el correo del Docente
-        String email = getIntent().getStringExtra("email");
+        email = getIntent().getStringExtra("email");
+        user = getIntent().getStringExtra("user");
+        idestudiante = getIntent().getStringExtra("idestudiante");
 
         //Llamar a LinearLayout que contiene botones
         botonesCursos = (LinearLayout) findViewById(R.id.CursosDBotones);
@@ -59,45 +63,10 @@ public class MisCursosEstudiante extends AppCompatActivity {
         //  referenciamos datos de firebase
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
-        econtrarIdEstudiante(email);
+        encontrarClasesconId(idestudiante);
 
         //Menu
         drawerLayout = findViewById(R.id.drawer_layout);
-    }
-
-    private void econtrarIdEstudiante(String email) {
-        // listado de objetos almacenados (usuarios creados)
-        Estudiantes = new ArrayList<>();
-        final String ema = email;
-
-        databaseReference.child("Estudiantes").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                // Borramos la lista previa
-                Estudiantes.clear();
-
-                if(dataSnapshot.exists()){
-                    for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                        //Log.e("Profesores: ", ""+ snapshot.getValue());
-                        //obtenemos los usuarios de la consola de Firebase
-                        Estudiante Estudiante = snapshot.getValue(Estudiante.class);
-                        // agregamos usuarios a la lista
-                        Estudiantes.add(Estudiante);
-                    }
-                    //comprobamos el correo y asociamos a un id
-                    for (int i = 0; i < Estudiantes.size(); i++) {
-                        Estudiante Estudiante = Estudiantes.get(i);
-                        if(Estudiante.getCorreoestudiante().equals(ema)){
-                            String idest = Estudiante.getIdestudiante();
-                            encontrarClasesconId(idest);
-                        }
-                    }
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        });
     }
 
     private void encontrarClasesconId(final String idest) {
@@ -199,7 +168,6 @@ public class MisCursosEstudiante extends AppCompatActivity {
                             }
                         });
                     }
-
                 }
             }
             @Override
@@ -250,15 +218,23 @@ public class MisCursosEstudiante extends AppCompatActivity {
 
     public void ClickAutoMenu(View view){
         String email = getIntent().getStringExtra("email");
+        String user = getIntent().getStringExtra("user");
+        String idestudiante = getIntent().getStringExtra("idestudiante");
         Intent i = new Intent(MisCursosEstudiante.this, AutoevaluacionEstudiantes.class);
         i.putExtra("email", email);
+        i.putExtra("user", user);
+        i.putExtra("idestudiante", idestudiante);
         startActivity(i);
     }
 
     public void ClickCursosMenu(View view){
         String email = getIntent().getStringExtra("email");
+        String user = getIntent().getStringExtra("user");
+        String idestudiante = getIntent().getStringExtra("idestudiante");
         Intent i = new Intent(MisCursosEstudiante.this, MisCursosEstudiante.class);
         i.putExtra("email", email);
+        i.putExtra("user", user);
+        i.putExtra("idestudiante", idestudiante);
         startActivity(i);
     }
 

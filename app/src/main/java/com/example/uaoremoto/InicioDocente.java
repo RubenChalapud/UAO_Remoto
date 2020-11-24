@@ -14,8 +14,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class InicioDocente extends AppCompatActivity {
-    public static final String user="names";
-    public static final String email="email";
     TextView txtUser;
     TextView txtCorreo;
 
@@ -33,13 +31,14 @@ public class InicioDocente extends AppCompatActivity {
         btnRealizarAutoE = (Button) findViewById(R.id.btnRealizarEvaluacion);
 
         txtUser =(TextView)findViewById(R.id.textViewNombreD);
-        String user = getIntent().getStringExtra("names");
+        final String user = getIntent().getStringExtra("user");
         txtUser.setText(user);
 
         txtCorreo = (TextView) findViewById(R.id.textViewCorreoD);
         final String email = getIntent().getStringExtra("email");
         txtCorreo.setText(email);
 
+        final String idprofesor = getIntent().getStringExtra("idprofesor");
         //Menu
         drawerLayout = findViewById(R.id.drawer_layout);
 
@@ -49,6 +48,8 @@ public class InicioDocente extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i = new Intent(InicioDocente.this, AutoevaluacionDocente.class);
                 i.putExtra("email", email);
+                i.putExtra("user", user);
+                i.putExtra("idprofesor", idprofesor);
                 startActivity(i);
             }
         });
@@ -75,15 +76,23 @@ public class InicioDocente extends AppCompatActivity {
 
     public void ClickAutoMenu(View view){
         String email = getIntent().getStringExtra("email");
+        String user = getIntent().getStringExtra("user");
+        String idprofesor = getIntent().getStringExtra("idprofesor");
         Intent i = new Intent(InicioDocente.this, AutoevaluacionDocente.class);
         i.putExtra("email", email);
+        i.putExtra("user", user);
+        i.putExtra("idprofesor", idprofesor);
         startActivity(i);
     }
 
     public void ClickCursosMenu(View view){
         String email = getIntent().getStringExtra("email");
+        String user = getIntent().getStringExtra("user");
+        String idprofesor = getIntent().getStringExtra("idprofesor");
         Intent i = new Intent(InicioDocente.this, MisCursosDocente.class);
         i.putExtra("email", email);
+        i.putExtra("user", user);
+        i.putExtra("idprofesor", idprofesor);
         startActivity(i);
     }
 

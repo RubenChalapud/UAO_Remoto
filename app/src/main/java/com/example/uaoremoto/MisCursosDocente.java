@@ -50,13 +50,17 @@ public class MisCursosDocente extends AppCompatActivity {
     DatabaseReference dbCursos;
     DatabaseReference dbProfesores;
 
+    String email, user, idprofesor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mis_cursos_docente);
 
         //Obtener el correo del Docente
-        String email = getIntent().getStringExtra("email");
+        email = getIntent().getStringExtra("email");
+        user = getIntent().getStringExtra("user");
+        idprofesor = getIntent().getStringExtra("idprofesor");
 
         //Llamar a LinearLayout que contiene botones
         botonesCursos = (LinearLayout) findViewById(R.id.CursosDBotones);
@@ -67,52 +71,15 @@ public class MisCursosDocente extends AppCompatActivity {
         dbCursos = FirebaseDatabase.getInstance().getReference("Cursos");
         dbProfesores = FirebaseDatabase.getInstance().getReference("Profesores");
 
-        econtrarIdProfesor(email);
+        encontrarCursosconId(idprofesor);
 
         //Menu
         drawerLayout = findViewById(R.id.drawer_layout);
     }
 
-    private void econtrarIdProfesor(String email) {
-        // listado de objetos almacenados (usuarios creados)
-        Profesores = new ArrayList<>();
-        final String ema = email;
-
-        databaseReference.child("Profesores").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                // Borramos la lista previa
-                Profesores.clear();
-
-                if(dataSnapshot.exists()){
-                    for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                        //Log.e("Profesores: ", ""+ snapshot.getValue());
-                        //obtenemos los usuarios de la consola de Firebase
-                        Profesor Profesor = snapshot.getValue(Profesor.class);
-                        // agregamos usuarios a la lista
-                        Profesores.add(Profesor);
-                    }
-                    //comprobamos el correo y asociamos a un id
-                    for (int i = 0; i < Profesores.size(); i++) {
-                        Profesor Profesor = Profesores.get(i);
-                        if(Profesor.getCorreoprofesor().equals(ema)){
-                            System.out.println(Profesor.getIdprofesor());
-                            String idpro = Profesor.getIdprofesor();
-                            encontrarCursosconId(idpro);
-                        }
-                    }
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        });
-    }
-
-    private void encontrarCursosconId(String idpro) {
+    private void encontrarCursosconId(final String idpro) {
         // listado de objetos almacenados (usuarios creados)
         Cursos = new ArrayList<>();
-        final String idp = idpro;
         //Arraylist para la creacion de los botones de cursos
         final ArrayList<boton> cursos = new ArrayList<boton>();
 
@@ -130,16 +97,14 @@ public class MisCursosDocente extends AppCompatActivity {
                         // agregamos usuarios a la lista
                         Cursos.add(Curso);
                     }
-
                     for (int i = 0; i < Cursos.size(); i++) {
                         Curso Curso = Cursos.get(i);
-                        if(Curso.getIdprofesor().equals(idp)){
+                        if(Curso.getIdprofesor().equals(idpro)){
                             cursos.add(new boton(Curso.getIdcurso(), Curso.getNombrecurso(), Curso.getNumestudiantes(), Curso.getHorariocurso(), Curso.getIdprofesor(), Curso.getIdaula()));
                         }else{
                             Toast.makeText(getApplicationContext(), "El profesor no tiene cursos asociados", Toast.LENGTH_SHORT).show();
                         }
                     }
-
                     //recorremos Arraylist para asignar los botones a cada curso
                     for (boton c:cursos){
                         final String ncurso = c.nombreCurso;
@@ -211,10 +176,7 @@ public class MisCursosDocente extends AppCompatActivity {
     }
 
     public void ClickInicio(View view){
-        String email = getIntent().getStringExtra("email");
-        Intent i = new Intent(MisCursosDocente.this, InicioDocente.class);
-        i.putExtra("email", email);
-        startActivity(i);
+        closeDrawer(drawerLayout);
     }
 
     private static void closeDrawer(DrawerLayout drawerLayout) {
@@ -225,13 +187,24 @@ public class MisCursosDocente extends AppCompatActivity {
 
     public void ClickAutoMenu(View view){
         String email = getIntent().getStringExtra("email");
+        String user = getIntent().getStringExtra("user");
+        String idprofesor = getIntent().getStringExtra("idprofesor");
         Intent i = new Intent(MisCursosDocente.this, AutoevaluacionDocente.class);
         i.putExtra("email", email);
+        i.putExtra("user", user);
+        i.putExtra("idprofesor", idprofesor);
         startActivity(i);
     }
 
     public void ClickCursosMenu(View view){
-        closeDrawer(drawerLayout);
+        String email = getIntent().getStringExtra("email");
+        String user = getIntent().getStringExtra("user");
+        String idprofesor = getIntent().getStringExtra("idprofesor");
+        Intent i = new Intent(MisCursosDocente.this, MisCursosDocente.class);
+        i.putExtra("email", email);
+        i.putExtra("user", user);
+        i.putExtra("idprofesor", idprofesor);
+        startActivity(i);
     }
 
     public void ClickSalir(View view){

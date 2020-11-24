@@ -17,15 +17,16 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class AutoevaluacionEstudiantes extends AppCompatActivity {
     private CheckBox c1, c2, c3, c4, c5, c6, c7, c8, cns;
     private Button btnValidar;
-    public String email;
+    public String email, idestudiante, user;
     DatabaseReference databaseReference;
-    //lista que almacena todos los usuarios clase de la base de datos de Firebase
-    List<Estudiante> Estudiantes;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,10 +35,11 @@ public class AutoevaluacionEstudiantes extends AppCompatActivity {
 
         btnValidar = (Button) findViewById(R.id.btnValidar);
         email = getIntent().getStringExtra("email");
+        user = getIntent().getStringExtra("user");
+        idestudiante = getIntent().getStringExtra("idestudiante");
 
         //  referenciamos datos de firebase
         databaseReference = FirebaseDatabase.getInstance().getReference();
-        Estudiantes = new ArrayList<Estudiante>();
 
 
         c1 = (CheckBox) findViewById(R.id.cBoxSin1);
@@ -136,6 +138,8 @@ public class AutoevaluacionEstudiantes extends AppCompatActivity {
             sintomasestudiante = "No";
             Intent i = new Intent(AutoevaluacionEstudiantes.this, ValidacionPositivaE.class);
             i.putExtra("email", email);
+            i.putExtra("user", user);
+            i.putExtra("idestudiante", idestudiante);
             i.putExtra("mensaje", mensaje);
             startActivity(i);
         }
@@ -144,6 +148,8 @@ public class AutoevaluacionEstudiantes extends AppCompatActivity {
             sintomasestudiante = "No";
             Intent i = new Intent(AutoevaluacionEstudiantes.this, ValidacionPositivaE.class);
             i.putExtra("email", email);
+            i.putExtra("user", user);
+            i.putExtra("idestudiante", idestudiante);
             i.putExtra("mensaje", mensaje);
             startActivity(i);
         }
@@ -153,6 +159,8 @@ public class AutoevaluacionEstudiantes extends AppCompatActivity {
             Intent i = new Intent(AutoevaluacionEstudiantes.this, ValidacionPositivaE.class);
             i.putExtra("email", email);
             i.putExtra("mensaje", mensaje);
+            i.putExtra("user", user);
+            i.putExtra("idestudiante", idestudiante);
             startActivity(i);
         }
         else if (c1.isChecked()==false && c2.isChecked()==false && c3.isChecked()==false && c4.isChecked()==false && c5.isChecked()==false && c6.isChecked()==false && c7.isChecked()==false && c8.isChecked()==false && cns.isChecked()==false){
@@ -161,49 +169,17 @@ public class AutoevaluacionEstudiantes extends AppCompatActivity {
             sintomasestudiante = "Si";
             Intent i = new Intent(AutoevaluacionEstudiantes.this, ValidacionNegativaE.class);
             i.putExtra("email", email);
+            i.putExtra("user", user);
+            i.putExtra("idestudiante", idestudiante);
             startActivity(i);
         }
         SintomasEstudiante(sintomasestudiante);
-        //SsintomasEstudiante(sintomasestudiante);
     }
 
-    private void SsintomasEstudiante(String sintomasestudiante) {
-        databaseReference.child("Estudiantes").orderByChild("correoestudiante");
-        String key = databaseReference.child("Estudiantes").child("correoestudiante").child(email).push().getKey();
-        databaseReference.child("Estudiantes").child(key).child("sintomasestudiante").setValue(sintomasestudiante);
-    }
-
-    private void SintomasEstudiante(final String sintomasestudiante) {
-
-        databaseReference.child("Estudiantes").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                // Borramos la lista previa
-                Estudiantes.clear();
-                String ide = null;
-                if(dataSnapshot.exists()){
-                    for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                        //obtenemos los usuarios de la consola de Firebase
-                        Estudiante Estudiante = snapshot.getValue(Estudiante.class);
-                        // agregamos usuarios a la lista
-                        Estudiantes.add(Estudiante);
-                    }
-                    //comprobamos el correo de docente asociado para comprobar
-                    for (int i = 0; i < Estudiantes.size(); i++) {
-                        Estudiante Estudiante = Estudiantes.get(i);
-                        if(Estudiante.getCorreoestudiante().equals(email)){
-                            ide = Estudiante.getIdestudiante();
-                        }
-                    }
-                    //databaseReference.child("Estudiantes").child("correoestudiante").child(email).getKey();
-                    databaseReference.child("Estudiantes").child(ide).child("sintomasestudiante").setValue(sintomasestudiante);
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        });
-
+    private void SintomasEstudiante(String sintomasestudiante) {
+        final Map<String, Object> estMap = new HashMap<>();
+        estMap.put("sintomasestudiante", sintomasestudiante);
+        databaseReference.child("Estudiantes").child(idestudiante).updateChildren(estMap);
     }
 
 }

@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 public class ValidacionNegativaD extends AppCompatActivity {
     private Button btnIrInicio, btnNotifFac, btnNotifEst;
+    String email, idprofesor, user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,13 +20,17 @@ public class ValidacionNegativaD extends AppCompatActivity {
         btnIrInicio = (Button) findViewById(R.id.btnIrInicioND);
         btnNotifEst = (Button) findViewById(R.id.btnNotiEst);
         btnNotifFac = (Button) findViewById(R.id.btnNotiFac);
-        final String email = getIntent().getStringExtra("email");
+        email = getIntent().getStringExtra("email");
+        user = getIntent().getStringExtra("user");
+        idprofesor = getIntent().getStringExtra("idprofesor");
 
         btnIrInicio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent( ValidacionNegativaD.this, InicioDocente.class);
                 i.putExtra("email", email);
+                i.putExtra("user", user);
+                i.putExtra("idprofesor", idprofesor);
                 startActivity(i);
             }
         });

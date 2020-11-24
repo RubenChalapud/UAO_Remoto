@@ -30,12 +30,14 @@ public class InicioEstudiante extends AppCompatActivity {
         btnRealizarAutoE = (Button) findViewById(R.id.btnRealizarEvaluacionE);
 
         txtUser =(TextView)findViewById(R.id.textViewNombreE);
-        String user = getIntent().getStringExtra("user");
+        final String user = getIntent().getStringExtra("user");
         txtUser.setText(user);
 
         txtCorreo = (TextView) findViewById(R.id.textViewCorreoE);
         final String email = getIntent().getStringExtra("email");
         txtCorreo.setText(email);
+
+        final String idestudiante = getIntent().getStringExtra("idestudiante");
 
         //Menu
         drawerLayout = findViewById(R.id.drawer_layout);
@@ -46,6 +48,8 @@ public class InicioEstudiante extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i = new Intent(InicioEstudiante.this, AutoevaluacionEstudiantes.class);
                 i.putExtra("email", email);
+                i.putExtra("user", user);
+                i.putExtra("idestudiante", idestudiante);
                 startActivity(i);
             }
         });
@@ -72,15 +76,23 @@ public class InicioEstudiante extends AppCompatActivity {
 
     public void ClickAutoMenu(View view){
         String email = getIntent().getStringExtra("email");
+        String user = getIntent().getStringExtra("user");
+        String idestudiante = getIntent().getStringExtra("idestudiante");
         Intent i = new Intent(InicioEstudiante.this, AutoevaluacionEstudiantes.class);
         i.putExtra("email", email);
+        i.putExtra("user", user);
+        i.putExtra("idestudiante", idestudiante);
         startActivity(i);
     }
 
     public void ClickCursosMenu(View view){
         String email = getIntent().getStringExtra("email");
+        String user = getIntent().getStringExtra("user");
+        String idestudiante = getIntent().getStringExtra("idestudiante");
         Intent i = new Intent(InicioEstudiante.this, MisCursosEstudiante.class);
         i.putExtra("email", email);
+        i.putExtra("user", user);
+        i.putExtra("idestudiante", idestudiante);
         startActivity(i);
     }
 

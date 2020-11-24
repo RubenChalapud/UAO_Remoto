@@ -34,8 +34,7 @@ public class LoginEstudiante extends AppCompatActivity implements View.OnClickLi
 
     private FirebaseAuth firebaseAuth;
     DatabaseReference databaseReference;
-    //lista que almacena todos los usuarios de la base de datos de Firebase
-    List<Estudiante> Estudiantes;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +59,6 @@ public class LoginEstudiante extends AppCompatActivity implements View.OnClickLi
         final String email = textCorreo.getText().toString().trim();
         String password = textContra.getText().toString().trim();
 
-        Estudiantes = new ArrayList<>();
-
         //Verificamos que las cajas de texto no esten vacías
         if (TextUtils.isEmpty(email)) {
             Toast.makeText(this, "Se debe ingresar un email", Toast.LENGTH_LONG).show();
@@ -85,25 +82,15 @@ public class LoginEstudiante extends AppCompatActivity implements View.OnClickLi
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         //checking if success
                         if (task.isSuccessful()) {
-                            databaseReference.child("Estudiantes").addValueEventListener(new ValueEventListener() {
+                            databaseReference.child("Estudiantes").orderByChild("correoestudiante").addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    // Borramos la lista previa
-                                    Estudiantes.clear();
+                                    String idestudiante;
                                     if(dataSnapshot.exists()){
                                         for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                                            //obtenemos los usuarios de la consola de Firebase
-                                            Estudiante Estudiante = snapshot.getValue(Estudiante.class);
-                                            // agregamos usuarios a la lista
-                                            Estudiantes.add(Estudiante);
-                                        }
-                                        //comprobamos el correo de docente asociado para comprobar
-                                        for (int i = 0; i < Estudiantes.size(); i++) {
-                                            Estudiante Estudiante = Estudiantes.get(i);
-                                            if(Estudiante.getCorreoestudiante().equals(email)){
-                                                IrAInicio(Estudiante, email);
-                                            }else{
-                                                Toast.makeText(LoginEstudiante.this, "El usuario no es permitido", Toast.LENGTH_SHORT).show();
+                                            if(snapshot.child("correoestudiante").getValue().toString().equals(email)){
+                                                idestudiante = snapshot.child("idestudiante").getValue().toString();
+                                                IrAInicio(idestudiante, email);
                                             }
                                         }
                                     }
@@ -125,12 +112,13 @@ public class LoginEstudiante extends AppCompatActivity implements View.OnClickLi
                 });
     }
 
-    private void IrAInicio(Estudiante estudiante, String email) {
+    private void IrAInicio(String idestudiante, String email) {
         int pos = email.indexOf("@");
         String user = email.substring(0, pos);
         Toast.makeText(LoginEstudiante.this, "Bienvenido: " + textCorreo.getText(), Toast.LENGTH_LONG).show();
         Intent intencion = new Intent(getApplication(), InicioEstudiante.class);
         intencion.putExtra("user", user);
+        intencion.putExtra("idestudiante", idestudiante);
         intencion.putExtra("email", email);
         startActivity(intencion);
     }

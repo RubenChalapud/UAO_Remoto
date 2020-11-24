@@ -11,6 +11,7 @@ import android.widget.TextView;
 public class ValidacionPositivaD extends AppCompatActivity {
     private TextView msj;
     private Button btnIrInicioD;
+    String email, idprofesor, user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,13 +23,17 @@ public class ValidacionPositivaD extends AppCompatActivity {
         msj.setText(mesj);
 
         btnIrInicioD = (Button) findViewById(R.id.btnIrInicioD);
-        final String email = getIntent().getStringExtra("email");
+        email = getIntent().getStringExtra("email");
+        user = getIntent().getStringExtra("user");
+        idprofesor = getIntent().getStringExtra("idprofesor");
 
         btnIrInicioD.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent( ValidacionPositivaD.this, InicioDocente.class);
                 i.putExtra("email", email);
+                i.putExtra("user", user);
+                i.putExtra("idprofesor", idprofesor);
                 startActivity(i);
             }
         });

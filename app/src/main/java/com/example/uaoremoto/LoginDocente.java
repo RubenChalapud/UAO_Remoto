@@ -33,8 +33,6 @@ public class LoginDocente extends AppCompatActivity implements View.OnClickListe
 
     private FirebaseAuth firebaseAuth;
     DatabaseReference databaseReference;
-    //lista que almacena todos los usuarios de la base de datos de Firebase
-    List<Profesor> Profesores;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +57,6 @@ public class LoginDocente extends AppCompatActivity implements View.OnClickListe
         final String email = textCorreo.getText().toString().trim();
         String password = textContra.getText().toString().trim();
 
-        Profesores = new ArrayList<>();
 
         //Verificamos que las cajas de texto no esten vacías
         if (TextUtils.isEmpty(email)) {
@@ -87,24 +84,14 @@ public class LoginDocente extends AppCompatActivity implements View.OnClickListe
                             databaseReference.child("Profesores").addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    // Borramos la lista previa
-                                    Profesores.clear();
+                                    String idprofesor;
                                     if(dataSnapshot.exists()){
                                         for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                                            //obtenemos los usuarios de la consola de Firebase
-                                            Profesor Profesor = snapshot.getValue(Profesor.class);
-                                            // agregamos usuarios a la lista
-                                            Profesores.add(Profesor);
+                                            if(snapshot.child("correoprofesor").getValue().toString().equals(email)){
+                                                idprofesor = snapshot.child("idprofesor").getValue().toString();
+                                                IrAInicio(idprofesor, email);
+                                            }
                                         }
-                                        int pos = email.indexOf("@");
-                                        String user = email.substring(0, pos);
-                                        Toast.makeText(LoginDocente.this, "Bienvenido: " + textCorreo.getText(), Toast.LENGTH_LONG).show();
-                                        Intent intencion = new Intent(getApplication(), InicioDocente.class);
-                                        intencion.putExtra(InicioDocente.user, user);
-                                        intencion.putExtra(InicioDocente.email, email);
-                                        startActivity(intencion);
-                                        //comprobamos el correo de docente asociado para comprobar
-
                                     }
                                 }
                                 @Override
@@ -122,6 +109,17 @@ public class LoginDocente extends AppCompatActivity implements View.OnClickListe
                         progressDialog.dismiss();
                     }
                 });
+    }
+
+    private void IrAInicio(String idprofesor, String email) {
+        int pos = email.indexOf("@");
+        String user = email.substring(0, pos);
+        Toast.makeText(LoginDocente.this, "Bienvenido: " + textCorreo.getText(), Toast.LENGTH_LONG).show();
+        Intent intencion = new Intent(LoginDocente.this, InicioDocente.class);
+        intencion.putExtra("user", user);
+        intencion.putExtra("idprofesor", idprofesor);
+        intencion.putExtra("email", email);
+        startActivity(intencion);
     }
 
     @Override
