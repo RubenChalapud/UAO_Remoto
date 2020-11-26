@@ -72,8 +72,7 @@ public class VistaCurso extends AppCompatActivity {
     }
 
     public void ClickInicio(View view){
-        Intent i = new Intent(VistaCurso.this, InicioDocente.class);
-        startActivity(i);
+        closeDrawer(drawerLayout);
     }
 
     private static void closeDrawer(DrawerLayout drawerLayout) {
@@ -83,12 +82,27 @@ public class VistaCurso extends AppCompatActivity {
     }
 
     public void ClickAutoMenu(View view){
+        String email = getIntent().getStringExtra("email");
+        String user = getIntent().getStringExtra("user");
+        String idprofesor = getIntent().getStringExtra("idprofesor");
         Intent i = new Intent(VistaCurso.this, AutoevaluacionDocente.class);
+        i.putExtra("email", email);
+        i.putExtra("user", user);
+        i.putExtra("idprofesor", idprofesor);
+        closeDrawer(drawerLayout);
         startActivity(i);
     }
 
     public void ClickCursosMenu(View view){
+        String email = getIntent().getStringExtra("email");
+        String user = getIntent().getStringExtra("user");
+        String idprofesor = getIntent().getStringExtra("idprofesor");
+        Intent i = new Intent(VistaCurso.this, MisCursosDocente.class);
+        i.putExtra("email", email);
+        i.putExtra("user", user);
+        i.putExtra("idprofesor", idprofesor);
         closeDrawer(drawerLayout);
+        startActivity(i);
     }
 
     public void ClickSalir(View view){

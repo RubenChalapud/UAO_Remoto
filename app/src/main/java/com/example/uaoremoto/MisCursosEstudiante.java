@@ -69,44 +69,32 @@ public class MisCursosEstudiante extends AppCompatActivity {
         drawerLayout = findViewById(R.id.drawer_layout);
     }
 
-    private void encontrarClasesconId(final String idest) {
-        // listado de objetos almacenados (usuarios creados)
-        Clases = new ArrayList<>();
-        final String ide = idest;
-
-        databaseReference.child("Clases").addValueEventListener(new ValueEventListener() {
+    private void encontrarClasesconId(final String idestudiante) {
+        databaseReference.child("Clases").orderByChild("idestudiante").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                // Borramos la lista previa de Cursos
-                Clases.clear();
+                String idcurso;
+                String idclase;
                 if(dataSnapshot.exists()){
                     for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                        //obtenemos los usuarios de la consola de Firebase
-                        Clase Clase = snapshot.getValue(Clase.class);
-                        // agregamos usuarios a la lista
-                        Clases.add(Clase);
-                    }
-
-                    for (int i = 0; i < Clases.size(); i++) {
-                        Clase Clase = Clases.get(i);
-                        if(Clase.getIdestudiante().equals(ide)){
-                            String idcurso = Clase.getIdcurso();
-                            encontrarCursoconId(idcurso, ide, Clase.getIdclase());
+                        if(snapshot.child("idestudiante").getValue().toString().equals(idestudiante)){
+                            idcurso = snapshot.child("idcurso").getValue().toString();
+                            idclase = snapshot.child("idclase").getValue().toString();
+                            encontrarCursoconId(idcurso, idestudiante, idclase);
                         }
                     }
-
                 }
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
+
             }
         });
     }
 
-    private void encontrarCursoconId(String idcurso, final String idest, final String idclase) {
+    private void encontrarCursoconId(final String idcurso, final String idestudiante, final String idclase) {
         // listado de objetos almacenados (usuarios creados)
         Cursos = new ArrayList<>();
-        final String idc = idcurso;
 
         //Arraylist para la creacion de los botones de cursos
         final ArrayList<MisCursosEstudiante.boton> cursos = new ArrayList<MisCursosEstudiante.boton>();
@@ -119,18 +107,12 @@ public class MisCursosEstudiante extends AppCompatActivity {
                 cursos.clear();
                 if(dataSnapshot.exists()){
                     for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                        //obtenemos los usuarios de la consola de Firebase
-                        Curso Curso = snapshot.getValue(Curso.class);
-                        // agregamos usuarios a la lista
-                        Cursos.add(Curso);
-                    }
-
-                    for (int i = 0; i < Cursos.size(); i++) {
-                        Curso Curso = Cursos.get(i);
-                        if(Curso.getIdcurso().equals(idc)){
-                            cursos.add(new MisCursosEstudiante.boton(Curso.getIdcurso(), Curso.getNombrecurso(), Curso.getNumestudiantes(), Curso.getHorariocurso(), Curso.getIdprofesor(), Curso.getIdaula(), idest));
-                        }else{
-                            Toast.makeText(getApplicationContext(), "El estudiante no tiene cursos asociados", Toast.LENGTH_SHORT).show();
+                        if(snapshot.child("idcurso").getValue().toString().equals(idcurso)){
+                            //obtenemos los usuarios de la consola de Firebase
+                            Curso Curso = snapshot.getValue(Curso.class);
+                            // agregamos usuarios a la lista
+                            Cursos.add(Curso);
+                            cursos.add(new MisCursosEstudiante.boton(Curso.getIdcurso(), Curso.getNombrecurso(), Curso.getNumestudiantes(), Curso.getHorariocurso(), Curso.getIdprofesor(), Curso.getIdaula(), idestudiante));
                         }
                     }
 
@@ -211,9 +193,9 @@ public class MisCursosEstudiante extends AppCompatActivity {
     }
 
     private static void closeDrawer(DrawerLayout drawerLayout) {
-        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
-            drawerLayout.closeDrawer(GravityCompat.START);
-        }
+//        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
+//            drawerLayout.closeDrawer(GravityCompat.START);
+ //       }
     }
 
     public void ClickAutoMenu(View view){
@@ -224,6 +206,7 @@ public class MisCursosEstudiante extends AppCompatActivity {
         i.putExtra("email", email);
         i.putExtra("user", user);
         i.putExtra("idestudiante", idestudiante);
+        //closeDrawer(drawerLayout);
         startActivity(i);
     }
 
@@ -235,6 +218,7 @@ public class MisCursosEstudiante extends AppCompatActivity {
         i.putExtra("email", email);
         i.putExtra("user", user);
         i.putExtra("idestudiante", idestudiante);
+        //closeDrawer(drawerLayout);
         startActivity(i);
     }
 

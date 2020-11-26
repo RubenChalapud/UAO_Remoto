@@ -82,6 +82,7 @@ public class InicioDocente extends AppCompatActivity {
         i.putExtra("email", email);
         i.putExtra("user", user);
         i.putExtra("idprofesor", idprofesor);
+        closeDrawer(drawerLayout);
         startActivity(i);
     }
 
@@ -93,6 +94,7 @@ public class InicioDocente extends AppCompatActivity {
         i.putExtra("email", email);
         i.putExtra("user", user);
         i.putExtra("idprofesor", idprofesor);
+        closeDrawer(drawerLayout);
         startActivity(i);
     }
 

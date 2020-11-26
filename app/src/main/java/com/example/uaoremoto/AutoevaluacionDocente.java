@@ -144,8 +144,7 @@ public class AutoevaluacionDocente extends AppCompatActivity {
             i.putExtra("mensaje", mensaje);
             startActivity(i);
         }
-
-        if(c3.isChecked()==true && c1.isChecked()==false && c2.isChecked()==false && c4.isChecked()==false && c5.isChecked()==false && c6.isChecked()==false && c7.isChecked()==false){
+        else if(c3.isChecked()==true && c1.isChecked()==false && c2.isChecked()==false && c4.isChecked()==false && c5.isChecked()==false && c6.isChecked()==false && c7.isChecked()==false){
             mensaje = "Presentas síntomas leves relacionados a COVID-19, como congestión nasal o dolor muscular. Tienes permitido ir al Campus UAO, si los sintomas empeoran, debes notificar y no asistir. Recuerda:";
             sintomasprofesor = "No";
             //SintomasProfesor(sintomasprofesor);
@@ -156,8 +155,7 @@ public class AutoevaluacionDocente extends AppCompatActivity {
             i.putExtra("mensaje", mensaje);
             startActivity(i);
         }
-
-        if(c8.isChecked()==true && c1.isChecked()==false && c2.isChecked()==false && c4.isChecked()==false && c5.isChecked()==false && c6.isChecked()==false && c7.isChecked()==false){
+        else if(c8.isChecked()==true && c1.isChecked()==false && c2.isChecked()==false && c4.isChecked()==false && c5.isChecked()==false && c6.isChecked()==false && c7.isChecked()==false){
             mensaje = "Presentas síntomas leves relacionados a COVID-19, como congestión nasal o dolor muscular. Tienes permitido ir al Campus UAO, si los sintomas empeoran, debes notificar y no asistir. Recuerda:";
             sintomasprofesor = "No";
             //SintomasProfesor(sintomasprofesor);
@@ -168,8 +166,7 @@ public class AutoevaluacionDocente extends AppCompatActivity {
             i.putExtra("mensaje", mensaje);
             startActivity(i);
         }
-
-        if (c1.isChecked()==false && c2.isChecked()==false && c3.isChecked()==false && c4.isChecked()==false && c5.isChecked()==false && c6.isChecked()==false && c7.isChecked()==false && c8.isChecked()==false && cns.isChecked()==false){
+        else if (c1.isChecked()==false && c2.isChecked()==false && c3.isChecked()==false && c4.isChecked()==false && c5.isChecked()==false && c6.isChecked()==false && c7.isChecked()==false && c8.isChecked()==false && cns.isChecked()==false){
             Toast.makeText(AutoevaluacionDocente.this, "Seleccione los síntomas que presenta para continuar.", Toast.LENGTH_LONG).show();
         }else{
             sintomasprofesor = "Si";

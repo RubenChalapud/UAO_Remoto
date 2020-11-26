@@ -193,6 +193,7 @@ public class MisCursosDocente extends AppCompatActivity {
         i.putExtra("email", email);
         i.putExtra("user", user);
         i.putExtra("idprofesor", idprofesor);
+        closeDrawer(drawerLayout);
         startActivity(i);
     }
 
@@ -204,6 +205,7 @@ public class MisCursosDocente extends AppCompatActivity {
         i.putExtra("email", email);
         i.putExtra("user", user);
         i.putExtra("idprofesor", idprofesor);
+        closeDrawer(drawerLayout);
         startActivity(i);
     }
 

@@ -16,7 +16,7 @@ import java.util.BitSet;
 
 public class VistaCursoE extends AppCompatActivity {
     private TextView textNombre, textAula, TextHorario, TextNumEst;
-    private Button btnListarEstudiantes, btnUbicacion, btnAsistencia;
+    private Button btnListarEstudiantes, btnUbicacion, btnAsistencia, btnAsistirVirtual;
 
     //Inicializar menu
     DrawerLayout drawerLayout;
@@ -33,6 +33,7 @@ public class VistaCursoE extends AppCompatActivity {
         btnListarEstudiantes = (Button) findViewById(R.id.btnListaEstudiantes);
         btnUbicacion = (Button) findViewById(R.id.btnUbicacionAula);
         btnAsistencia = (Button) findViewById(R.id.btnRegAsistencia);
+        btnAsistirVirtual = (Button) findViewById(R.id.btnAsistirVirtualCurso);
 
         textNombre =(TextView)findViewById(R.id.textViewNombreCurso);
         final String nombrecurso = getIntent().getStringExtra("nombrecurso");
@@ -82,6 +83,19 @@ public class VistaCursoE extends AppCompatActivity {
                 i.putExtra("idcurso", idcurso);
                 i.putExtra("idclase", idclase);
                 i.putExtra("idestudiante", idestu);
+                i.putExtra("nombrecurso", nombrecurso);
+                startActivity(i);
+            }
+        });
+
+        btnAsistirVirtual.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(VistaCursoE.this, AsistenciaVirtualE.class);
+                i.putExtra("idcurso", idcurso);
+                i.putExtra("idclase", idclase);
+                i.putExtra("idestudiante", idestu);
+                i.putExtra("nombrecurso", nombrecurso);
                 startActivity(i);
             }
         });
@@ -101,22 +115,32 @@ public class VistaCursoE extends AppCompatActivity {
     }
 
     private static void closeDrawer(DrawerLayout drawerLayout) {
-        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
-            drawerLayout.closeDrawer(GravityCompat.START);
-        }
+//        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
+//            drawerLayout.closeDrawer(GravityCompat.START);
+//        }
     }
 
     public void ClickAutoMenu(View view){
         String email = getIntent().getStringExtra("email");
+        String user = getIntent().getStringExtra("user");
+        String idestudiante = getIntent().getStringExtra("idestudiante");
         Intent i = new Intent(VistaCursoE.this, AutoevaluacionEstudiantes.class);
         i.putExtra("email", email);
+        i.putExtra("user", user);
+        i.putExtra("idestudiante", idestudiante);
+ //       closeDrawer(drawerLayout);
         startActivity(i);
     }
 
     public void ClickCursosMenu(View view){
         String email = getIntent().getStringExtra("email");
+        String user = getIntent().getStringExtra("user");
+        String idestudiante = getIntent().getStringExtra("idestudiante");
         Intent i = new Intent(VistaCursoE.this, MisCursosEstudiante.class);
         i.putExtra("email", email);
+        i.putExtra("user", user);
+        i.putExtra("idestudiante", idestudiante);
+    //    closeDrawer(drawerLayout);
         startActivity(i);
     }
 
@@ -143,6 +167,6 @@ public class VistaCursoE extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        closeDrawer(drawerLayout);
+//        closeDrawer(drawerLayout);
     }
 }
