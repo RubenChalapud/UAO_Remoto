@@ -43,30 +43,6 @@ public class UbicacionAula extends FragmentActivity implements OnMapReadyCallbac
         mapFragment.getMapAsync(this);
     }
 
-    private void traerDatosAula(final String idaula) {
-        databaseReference.child("Aulas").child(idaula).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists()){
-                    lat = dataSnapshot.child("latitud").getValue(String.class);
-                    lon = dataSnapshot.child("longitud").getValue(String.class);
-                    convertir(lat, lon);
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
-
-    private void convertir(String lat, String lon) {
-        latitud = Double.parseDouble(lat);
-        longitud = Double.parseDouble(lon);
-        Log.i("latitud", ""+latitud);
-        Log.i("longitud", ""+longitud);
-    }
-
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
@@ -78,15 +54,21 @@ public class UbicacionAula extends FragmentActivity implements OnMapReadyCallbac
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        traerDatosAula(idaula);
         mMap = googleMap;
+
+        idaula = getIntent().getStringExtra("idaula");
+        lat = getIntent().getStringExtra("latitud");
+        lon = getIntent().getStringExtra("longitud");
+
+        latitud = Double.parseDouble(lat);
+        longitud = Double.parseDouble(lon);
+
         // Add a marker in Sydney and move the camera
         Log.i("latitud2", ""+latitud);
         Log.i("longitud2", ""+longitud);
         LatLng aula = new LatLng(latitud, longitud);
         mMap.addMarker(new MarkerOptions().position(aula).title("Marcado en: " + idaula));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(aula));
-        mMap.getMaxZoomLevel();
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(aula, 19));
     }
 
 }

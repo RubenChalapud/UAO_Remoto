@@ -1,5 +1,6 @@
 package com.example.uaoremoto;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
@@ -8,15 +9,28 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.BitSet;
 
 public class VistaCursoE extends AppCompatActivity {
     private TextView textNombre, textAula, TextHorario, TextNumEst;
     private Button btnListarEstudiantes, btnUbicacion, btnAsistencia, btnAsistirVirtual;
+
+    String lat, lon;
+    double latitud = 0;
+    double longitud = 0;
+    DatabaseReference databaseReference;
+
 
     //Inicializar menu
     DrawerLayout drawerLayout;
@@ -28,6 +42,8 @@ public class VistaCursoE extends AppCompatActivity {
 
         //Menu
         drawerLayout = findViewById(R.id.drawer_layout);
+
+        databaseReference = FirebaseDatabase.getInstance().getReference();
 
         //Boton Listar estudiantes
         btnListarEstudiantes = (Button) findViewById(R.id.btnListaEstudiantes);
@@ -70,9 +86,7 @@ public class VistaCursoE extends AppCompatActivity {
         btnUbicacion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(VistaCursoE.this, UbicacionAula.class);
-                i.putExtra("idaula", idaulac);
-                startActivity(i);
+                traerDatosAulaEnviar(idaulac);
             }
         });
 
@@ -100,6 +114,30 @@ public class VistaCursoE extends AppCompatActivity {
             }
         });
     }
+
+    private void traerDatosAulaEnviar(final String idaula) {
+        databaseReference.child("Aulas").child(idaula).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    lat = dataSnapshot.child("latitud").getValue(String.class);
+                    lon = dataSnapshot.child("longitud").getValue(String.class);
+                    Intent i = new Intent(VistaCursoE.this, UbicacionAula.class);
+                    i.putExtra("idaula", idaula);
+                    i.putExtra("latitud", lat);
+                    i.putExtra("longitud", lon);
+                    Log.i("latitudV", ""+lat);
+                    Log.i("longitudV", ""+lon);
+                    startActivity(i);
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
 
     //Metodos para Menu
     public void ClickMenu(View view){
