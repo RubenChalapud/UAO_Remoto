@@ -23,6 +23,7 @@ public class PlayerActivity extends YouTubeBaseActivity implements YouTubePlayer
         YouTubePlayerView playerView = (YouTubePlayerView)findViewById(R.id.youTubePlayerView);
         playerView.initialize(DeveloperKey.DEVELOPER_KEY,this);
         fullScreen = (Button)findViewById(R.id.btnFullScreen);
+
         fullScreen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
