@@ -2,6 +2,6 @@ package com.example.uaoremoto;
 
 public class DeveloperKey {
 
-    public static final String DEVELOPER_KEY = "AIzaSyCLNrGahcT6UCNIKSTN-pqU5-hlXhDyG5w";
+    public static final String DEVELOPER_KEY = "AIzaSyAboa9Lq7rV2Sk-JyFMY9eyT5soboAAIbY";
 
 }

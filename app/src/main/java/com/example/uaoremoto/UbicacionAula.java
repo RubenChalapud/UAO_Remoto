@@ -24,17 +24,11 @@ public class UbicacionAula extends FragmentActivity implements OnMapReadyCallbac
     String idaula, lat, lon;
     public double latitud = 0;
     public double longitud = 0;
-    DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ubicacion_aula);
-
-        idaula = getIntent().getStringExtra("idaula");
-        //  referenciamos datos de firebase
-        databaseReference = FirebaseDatabase.getInstance().getReference();
-        //traerDatosAula(idaula); //Sincronico!!!
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
